@@ -174,7 +174,8 @@ void NetworkRequestBase::replySslErrorsSlot(
   mErrored = true;
   QStringList errorsList;
   foreach (const QSslError& e, errors) { errorsList.append(e.errorString()); }
-  finalize(QString(tr("SSL errors occurred:\n\n%1")).arg(errorsList.join("\n")));
+  finalize(
+      QString(tr("SSL errors occurred:\n\n%1")).arg(errorsList.join("\n")));
 }
 
 void NetworkRequestBase::replyDownloadProgressSlot(qint64 bytesReceived,

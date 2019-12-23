@@ -17,83 +17,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LIBREPCB_PROJECT_ERCMSGLIST_H
-#define LIBREPCB_PROJECT_ERCMSGLIST_H
+#ifndef LIBREPCB_APPLICATION_INITIALIZEWORKSPACEWIZARD_H
+#define LIBREPCB_APPLICATION_INITIALIZEWORKSPACEWIZARD_H
 
 /*******************************************************************************
  *  Includes
  ******************************************************************************/
-#include <librepcb/common/exceptions.h>
-#include <librepcb/common/fileio/filepath.h>
-#include <librepcb/common/fileio/serializableobject.h>
+#include "initializeworkspacewizardcontext.h"
 
 #include <QtCore>
+#include <QtWidgets>
 
 /*******************************************************************************
  *  Namespace / Forward Declarations
  ******************************************************************************/
 namespace librepcb {
-namespace project {
+namespace application {
 
-class Project;
-class ErcMsg;
+namespace Ui {
+class InitializeWorkspaceWizard;
+}
 
 /*******************************************************************************
- *  Class ErcMsgList
+ *  Class InitializeWorkspaceWizard
  ******************************************************************************/
 
 /**
- * @brief The ErcMsgList class contains a list of ERC messages which are visible
- * for the user
+ * @brief The InitializeWorkspaceWizard class
  */
-class ErcMsgList final : public QObject, public SerializableObject {
+class InitializeWorkspaceWizard final : public QWizard {
   Q_OBJECT
 
 public:
   // Constructors / Destructor
-  ErcMsgList()                        = delete;
-  ErcMsgList(const ErcMsgList& other) = delete;
-  explicit ErcMsgList(Project& project);
-  ~ErcMsgList() noexcept;
+  explicit InitializeWorkspaceWizard(const FilePath& workspacePath,
+                                     QWidget*        parent = nullptr) noexcept;
+  InitializeWorkspaceWizard(const InitializeWorkspaceWizard& other) = delete;
+  ~InitializeWorkspaceWizard() noexcept;
 
   // Getters
-  const QList<ErcMsg*>& getItems() const noexcept { return mItems; }
-
-  // Setters
-  void setAppLocaleName(const QString& locale) noexcept;
-
-  // General Methods
-  void add(ErcMsg* ercMsg) noexcept;
-  void remove(ErcMsg* ercMsg) noexcept;
-  void update(ErcMsg* ercMsg) noexcept;
-  void restoreIgnoreState();
-  void save();
+  const InitializeWorkspaceWizardContext& getContext() const noexcept {
+    return mContext;
+  }
 
   // Operator Overloadings
-  ErcMsgList& operator=(const ErcMsgList& rhs) = delete;
+  InitializeWorkspaceWizard& operator=(const InitializeWorkspaceWizard& rhs) =
+      delete;
 
-signals:
-
-  void ercMsgAdded(ErcMsg* ercMsg);
-  void ercMsgRemoved(ErcMsg* ercMsg);
-  void ercMsgChanged(ErcMsg* ercMsg);
-
-private:  // Methods
-  /// @copydoc librepcb::SerializableObject::serialize()
-  void serialize(SExpression& root) const override;
-
-  // General
-  Project& mProject;
-
-  // Misc
-  QList<ErcMsg*> mItems;  ///< contains all visible ERC messages
+private:
+  InitializeWorkspaceWizardContext              mContext;
+  QScopedPointer<Ui::InitializeWorkspaceWizard> mUi;
 };
 
 /*******************************************************************************
  *  End of File
  ******************************************************************************/
 
-}  // namespace project
+}  // namespace application
 }  // namespace librepcb
 
-#endif  // LIBREPCB_PROJECT_ERCMSGLIST_H
+#endif  // LIBREPCB_APPLICATION_INITIALIZEWORKSPACEWIZARD_H

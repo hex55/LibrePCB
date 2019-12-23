@@ -68,6 +68,9 @@ public:
       noexcept;  // convenience function, e.g. for template usage
   bool isSelectable() const noexcept override;
 
+  // Setters
+  void setLengthUnit(const LengthUnit& unit) noexcept;
+
   // General Methods
   void addToBoard() override;
   void removeFromBoard() override;
