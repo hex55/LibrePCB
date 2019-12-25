@@ -26,6 +26,7 @@ INCLUDEPATH += \
     ../../sexpresso \
     ../../type_safe/include \
     ../../type_safe/external/debug_assert \
+    /usr/include/oce \
 
 SOURCES += \
     alignment.cpp \
@@ -108,6 +109,7 @@ SOURCES += \
     network/networkrequest.cpp \
     network/networkrequestbase.cpp \
     network/repository.cpp \
+    occ/opencascadeview.cpp \
     signalrole.cpp \
     sqlitedatabase.cpp \
     systeminfo.cpp \
@@ -244,6 +246,7 @@ HEADERS += \
     network/networkrequestbase.h \
     network/repository.h \
     norms.h \
+    occ/opencascadeview.h \
     scopeguard.h \
     scopeguardlist.h \
     signalrole.h \
